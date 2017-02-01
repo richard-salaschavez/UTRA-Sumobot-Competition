@@ -52,10 +52,25 @@ void setup()
 
 void loop() {
   // 3 second delay as required by competition
-  if (currentTime > 3000)
+  if (currentTime >= 3000)
   {
-    t.update();
-  }
+    // counter is introduced to perform a star and stop motion at the start
+    // to ensure that hinged ramp falls over and does not cover the ultrasonic
+    // sensor
+    // counter ensures that this action is performed only once
+    if (count == 0)
+    {
+      previousTime = currentTime;
+      while (currentTime - previousTime <= 150)
+      {
+        if (currentTime - previousTime <= 75)
+          straight();
+        else 
+          straightBack();
+        currentTime = millis();
+      }
+      count ++;
+    }
 
   else
   {
